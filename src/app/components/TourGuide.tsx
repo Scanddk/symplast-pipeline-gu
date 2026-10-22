@@ -286,7 +286,8 @@ export function TourGuide({ tour, playIntro, onExit }: { tour: Tour; playIntro: 
     // Both threads open with the first text of the card's stage, as the engine just sent it.
     const series = config.series.find((s) => s.stageId === guide.engine.card?.stage);
     const text = series?.texts[0];
-    const sent: ThreadLine[] = series && text ? [{ from: 'practice', text: render(text.message, ctx), example: series.exampleMessages }] : [];
+    const sent: ThreadLine[] =
+      series && text ? [{ from: 'practice', text: render(text.message, ctx), example: series.exampleMessages, automatic: true }] : [];
     if (b.demo === 'patient_reply') {
       return [
         ...sent,
@@ -356,9 +357,9 @@ export function TourGuide({ tour, playIntro, onExit }: { tour: Tour; playIntro: 
           text={{
             title: render(beat.lapse.title[view], ctx),
             body: render(beat.lapse.body[view], ctx),
-            // After days that moved the card, "See what happens"; after story-only days, "Continue".
-            continue: beat.fires ? copy.timeLapse.continue : copy.timeLapse.next,
-            hint: beat.fires ? copy.timeLapse.hint : copy.timeLapse.nextHint,
+            // After days that move the card, "See what happens"; story-only days move on by themselves.
+            continue: beat.fires ? copy.timeLapse.continue : undefined,
+            hint: beat.fires ? copy.timeLapse.hint : undefined,
           }}
           sunFaces={beat.lapse.sunFaces}
           onComplete={complete}
@@ -378,7 +379,11 @@ export function TourGuide({ tour, playIntro, onExit }: { tour: Tour; playIntro: 
 
       <div ref={dockRef} className={styles.dock} data-dock>
         {launch && (
-          <AppDock hint={fill(copy.appDock.hints[launch], { firstName: patient.first })} onOpen={() => setPhase('demo')} />
+          <AppDock
+            hint={fill(copy.appDock.hints[launch], { firstName: patient.first })}
+            avoid={threadBeat ? '[role="log"]' : undefined}
+            onOpen={() => setPhase('demo')}
+          />
         )}
         <CaptionBar
           step={showEngineCaption ? guide.currentStep : null}

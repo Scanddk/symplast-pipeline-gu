@@ -1,16 +1,42 @@
-/* A Mac-style app dock, floating just above the tour's caption and controls. */
+/* A Mac-style app dock, floating just above the tour's caption and controls: centred, or to one side. */
 .wrap {
   position: absolute;
-  left: 50%;
   bottom: calc(100% + 18px);
-  transform: translateX(-50%);
   animation: rise 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.center {
+  left: 50%;
+  translate: -50% 0;
+}
+
+/* Clear of the conversation: far enough in that the hint fits on the open side. */
+.left {
+  left: 40px;
+}
+
+.right {
+  right: 40px;
+}
+
+/* Until it knows which side it goes on: hidden, and its entrance waits. */
+.unplaced {
+  visibility: hidden;
+  animation-play-state: paused;
+}
+
+/*
+ * The hint goes to the open side of the screen: right of the dock when it's centred or on the left, left of it when
+ * it's on the right. The Practice App sits on that side, so the hint never covers Symplast CRM.
+ */
+.right .dock {
+  flex-direction: row-reverse;
 }
 
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translate(-50%, 30px);
+    transform: translateY(30px);
   }
 }
 

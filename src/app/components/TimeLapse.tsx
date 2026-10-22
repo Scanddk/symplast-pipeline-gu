@@ -12,6 +12,8 @@ import styles from './TimeLapse.module.css';
 const FIRST_DAY_MS = 1000;
 const SLOWER_BY_MS = 450;
 const dayMs = (i: number) => FIRST_DAY_MS + i * SLOWER_BY_MS;
+/** Without a button: time to read the card before the story moves on. */
+const READ_MS = 2600;
 
 /**
  * Days go by before the clock jumps: above the calendar, the sun rises, crosses, and sets, night falls with the
@@ -21,13 +23,18 @@ const dayMs = (i: number) => FIRST_DAY_MS + i * SLOWER_BY_MS;
 export function TimeLapse(props: {
   fromDay: number;
   toDay: number;
-  /** What to say once the days have gone by (already filled in). */
-  text: { title: string; body: string; continue: string; hint: string };
+  /**
+   * What to say once the days have gone by (already filled in). With `continue`, a button (and the pointer)
+   * moves the story on; without it, the story moves on by itself once the card has been read.
+   */
+  text: { title: string; body: string; continue?: string; hint?: string };
   /** An emoji that crosses the sky instead of the sun, by day counted from fromDay (0 = the first day). */
   sunFaces?: Record<string, string>;
   onComplete: () => void;
 }) {
   const { fromDay, toDay, text, sunFaces, onComplete } = props;
+  const finish = useRef(onComplete);
+  finish.current = onComplete;
   const { config, fill } = useGuideContext();
   const { timeLapse: t } = config.copy;
   const reducedMotion = useReducedMotion() ?? false;
@@ -46,8 +53,14 @@ export function TimeLapse(props: {
   }, [day, done, fromDay]);
 
   useEffect(() => {
-    if (done) buttonRef.current?.focus({ preventScroll: true });
-  }, [done]);
+    if (!done) return;
+    if (text.continue) {
+      buttonRef.current?.focus({ preventScroll: true });
+      return;
+    }
+    const timer = window.setTimeout(() => finish.current(), READ_MS);
+    return () => window.clearTimeout(timer);
+  }, [done, text.continue]);
 
   return (
     <div className={styles.backdrop}>
@@ -86,10 +99,14 @@ export function TimeLapse(props: {
           {done ? text.title : ' '}
         </p>
         <p className={`${styles.body} ${done ? styles.shown : ''}`}>{text.body}</p>
-        <button ref={buttonRef} type="button" className={styles.button} onClick={onComplete} disabled={!done}>
-          {text.continue}
-        </button>
-        {done && <AssistPointer containerRef={cardRef} getTarget={() => buttonRef.current} targetKey="continue" hint={text.hint} />}
+        {text.continue && (
+          <button ref={buttonRef} type="button" className={styles.button} onClick={onComplete} disabled={!done}>
+            {text.continue}
+          </button>
+        )}
+        {done && text.continue && text.hint && (
+          <AssistPointer containerRef={cardRef} getTarget={() => buttonRef.current} targetKey="continue" hint={text.hint} />
+        )}
       </div>
     </div>
   );

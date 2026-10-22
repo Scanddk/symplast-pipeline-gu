@@ -53,6 +53,8 @@ export const Copy = z.object({
     noMoreActions: S,
   }),
   caption: z.object({ start: S, why: S, regionLabel: S }),
+  /** Hover titles on sender avatars beside texts. */
+  senders: z.object({ automatic: S, team: S }),
   story: z.object({
     overview: S,
     /** Overview hero headline in three parts; the emphasis is underlined. {count} is the number of stages that send texts. */
@@ -276,8 +278,8 @@ export const Copy = z.object({
     saved: S,
   }),
   /** Days rolling by before the clock jumps. */
-  /** continue/hint after days that moved the card; next/nextHint after story-only days. The texts come from the beat. */
-  timeLapse: z.object({ day: S, continue: S, hint: S, next: S, nextHint: S }),
+  /** continue/hint after days that move the card (story-only days move on by themselves). The texts come from the beat. */
+  timeLapse: z.object({ day: S, continue: S, hint: S }),
   /** The patient's text back. */
   /** The text conversation that leads to booking: the patient asks, your team offers {start} tomorrow, the patient agrees. */
   reply: z.object({ label: S, message: S, offer: S, answer: S, nurtureAnswer: S }),

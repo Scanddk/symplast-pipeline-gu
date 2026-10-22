@@ -42,6 +42,7 @@ import type { EngineState } from '../../../engine/index.ts';
 import { useGuideContext } from '../GuideContext.tsx';
 import { demoPatient, formNoteLines, toE164 } from '../demoPatient.ts';
 import { AssistPointer } from './AssistPointer.tsx';
+import { SenderAvatar } from './SenderAvatar.tsx';
 import styles from './ContactPanel.module.css';
 
 /**
@@ -197,12 +198,7 @@ export function ContactPanel({ engine, onComplete, onCancel }: { engine: EngineS
                   <div className={styles.sentRow}>
                     <p className={styles.sentBubble}>{smsText}</p>
                     {/* Who sent it: the team member's avatar, with a badge for the channel (SMS). */}
-                    <span className={styles.sender} aria-hidden="true">
-                      <UserRound size={18} />
-                      <span className={styles.channelBadge}>
-                        <MessageSquareMore size={10} />
-                      </span>
-                    </span>
+                    <SenderAvatar kind="staff" title={config.copy.senders.team} />
                   </div>
                   <p className={styles.sentMeta}>
                     {fill(c.composer.sent, { day: engine.day })}

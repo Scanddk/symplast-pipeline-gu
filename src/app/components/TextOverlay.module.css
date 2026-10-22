@@ -534,6 +534,36 @@
   animation: fadeIn 250ms ease var(--send-at) both;
 }
 
+/* A text and the automatic sender's avatar, on the side facing the card (like the tail). */
+.byline {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.toRight .byline {
+  flex-direction: row-reverse;
+}
+
+/* The label above and the status below line up with the bubble's edge, clear of the avatar. */
+.toLeft .message > .label,
+.toLeft .message > .status,
+.toLeft .message > :last-child,
+.toLeft .past > .label {
+  margin-right: 46px;
+}
+
+.toRight .message > .label,
+.toRight .message > .status,
+.toRight .message > :last-child,
+.toRight .past > .label {
+  margin-left: 46px;
+}
+
+.play .sender {
+  animation: fadeIn 250ms ease var(--send-at) both;
+}
+
 .send {
   display: grid;
 }

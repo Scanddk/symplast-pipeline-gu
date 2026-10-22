@@ -102,7 +102,7 @@ export const howCardsMoveTour: TourInput = {
       // Story only: waiting for the appointment moves nothing in the pipeline.
       autoAdvance: true,
       lapse: {
-        title: { client: 'The next day, {start}', internal: 'The next day, {start} (copy.slot)' },
+        title: { client: 'Consultation Day, {start}', internal: 'Consultation Day, {start} (copy.slot)' },
         body: {
           client: '{firstName} has had the consultation and is ready to check out.',
           internal: 'Consultation done; next is checkout.',

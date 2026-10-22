@@ -1,0 +1,47 @@
+/* Sender avatars, as in the CRM's conversation view (from the content owner's screenshots). */
+.avatar {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-family: var(--font-ghl);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.patient {
+  background: #f9d3ac;
+  color: #7a4a1c;
+}
+
+.staff {
+  background: #d9e6f2;
+  color: #3b5a7a;
+}
+
+/* Texts sent automatically: the CRM's purple play-circle avatar. */
+.automation {
+  background: #ece7fb;
+  color: #6d3fe0;
+}
+
+/* The channel badge: a small blue circle with the SMS icon. */
+.badge {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #155eef;
+  color: #fff;
+}

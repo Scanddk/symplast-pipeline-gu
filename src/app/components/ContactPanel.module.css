@@ -209,35 +209,6 @@
   line-height: 1.45;
 }
 
-/* The sender's avatar beside the bubble, with a small blue SMS badge on its corner. */
-.sender {
-  position: relative;
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: #d9e6f2;
-  color: #3b5a7a;
-}
-
-.channelBadge {
-  position: absolute;
-  right: -4px;
-  bottom: -4px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 17px;
-  height: 17px;
-  border: 2px solid #fafbfc;
-  border-radius: 50%;
-  background: #155eef;
-  color: #fff;
-}
-
 .sentMeta {
   display: inline-flex;
   align-items: center;

@@ -14,8 +14,10 @@ export function AssistPointer(props: {
   /** Changes whenever the target changes, so the guide travels to the new one. */
   targetKey: string;
   hint: string;
+  /** How far across the target to aim (0 to 1). Default a little right of centre, so the label stays readable. */
+  aim?: number;
 }) {
-  const { containerRef, getTarget, targetKey, hint } = props;
+  const { containerRef, getTarget, targetKey, hint, aim = 0.78 } = props;
   const reducedMotion = useReducedMotion() ?? false;
   const [pos, setPos] = useState<{ x: number; y: number; tip: 'right' | 'left' | 'below' | 'above' } | null>(null);
 
@@ -29,12 +31,12 @@ export function AssistPointer(props: {
       // Screen distances inside a scaled container (e.g. the zoomed-out CRM) are scaled too; undo that.
       const scale = container.offsetWidth ? c.width / container.offsetWidth : 1;
       // Aim a little right of centre so the touch doesn't hide the label being pointed at.
-      const x = (t.left - c.left + t.width * 0.78) / scale;
+      const x = (t.left - c.left + t.width * aim) / scale;
       const y = (t.top - c.top + t.height / 2) / scale + container.scrollTop;
       // Hint beside the touch (right, else left) so it never covers the next options; above/below as a last resort.
       // Room is measured to the container's edges if it clips its content, otherwise to the window's.
       const clips = getComputedStyle(container).overflow !== 'visible';
-      const touchX = t.left + t.width * 0.78;
+      const touchX = t.left + t.width * aim;
       const roomRight = (clips ? c.right : window.innerWidth) - touchX;
       const roomLeft = touchX - (clips ? c.left : 0);
       const tip = roomRight > 300 ? 'right' : roomLeft > 300 ? 'left' : y < container.offsetHeight - 120 ? 'below' : 'above';

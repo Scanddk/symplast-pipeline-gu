@@ -1,10 +1,15 @@
 import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import { useReducedMotion } from 'motion/react';
 import { useGuideContext } from '../GuideContext.tsx';
+import { demoPatient } from '../demoPatient.ts';
+import { SenderAvatar } from './SenderAvatar.tsx';
 import styles from './TextThread.module.css';
 
-/** One text in the thread. `typed`: your team types it out letter by letter; otherwise typing dots, then it lands. */
-export type ThreadLine = { from: 'patient' | 'practice'; text: string; typed?: boolean; example?: boolean };
+/**
+ * One text in the thread. `typed`: your team types it out letter by letter; otherwise typing dots, then it lands.
+ * `automatic`: sent automatically (a stage's text), shown with the automatic sender's avatar.
+ */
+export type ThreadLine = { from: 'patient' | 'practice'; text: string; typed?: boolean; example?: boolean; automatic?: boolean };
 
 /** Before each text after the first, a moment to read the one before. */
 const READ_MS = 1400;
@@ -108,6 +113,15 @@ export function TextThread(props: {
   if (!pos) return null;
   const label = (from: ThreadLine['from']) =>
     from === 'patient' ? fill(reply.label, { name: cast.name, day }) : fill(story.textMeta, { sender: story.sender, day });
+  const avatar = (line: ThreadLine) =>
+    line.from === 'patient' ? (
+      <SenderAvatar kind="patient" initials={demoPatient(cast, config.copy).initials} title={cast.name} />
+    ) : (
+      <SenderAvatar
+        kind={line.automatic ? 'automation' : 'staff'}
+        title={line.automatic ? config.copy.senders.automatic : config.copy.senders.team}
+      />
+    );
   const current = lines[shown];
   const typing = mode === 'typing' && current ? current : null;
   const dots = mode === 'dots' && current ? current : null;
@@ -126,12 +140,15 @@ export function TextThread(props: {
           const beingTyped = Boolean(typing) && i === visible.length - 1;
           return (
             <div key={i} className={`${styles.line} ${line.from === 'practice' ? styles.practice : styles.patient}`}>
-              {/* While your team types, screen readers wait for the finished text. */}
-              <p className={`${styles.bubble} ${i < visible.length - 1 ? styles.earlier : ''}`} aria-hidden={beingTyped || undefined}>
-                {line.text}
-                {beingTyped && <span className={styles.caret} />}
-                {line.example && !beingTyped && <span className={styles.example}>{story.exampleMessage}</span>}
-              </p>
+              <div className={styles.row}>
+                {avatar(line)}
+                {/* While your team types, screen readers wait for the finished text. */}
+                <p className={`${styles.bubble} ${i < visible.length - 1 ? styles.earlier : ''}`} aria-hidden={beingTyped || undefined}>
+                  {line.text}
+                  {beingTyped && <span className={styles.caret} />}
+                  {line.example && !beingTyped && <span className={styles.example}>{story.exampleMessage}</span>}
+                </p>
+              </div>
               {/* Who sent it, under the bubble's tail. */}
               <p className={styles.label}>{label(line.from)}</p>
             </div>
@@ -139,11 +156,14 @@ export function TextThread(props: {
         })}
         {dots && (
           <div className={`${styles.line} ${dots.from === 'practice' ? styles.practice : styles.patient}`} aria-hidden="true">
-            <span className={styles.typing}>
-              <i />
-              <i />
-              <i />
-            </span>
+            <div className={styles.row}>
+              {avatar(dots)}
+              <span className={styles.typing}>
+                <i />
+                <i />
+                <i />
+              </span>
+            </div>
             <p className={styles.label}>{label(dots.from)}</p>
           </div>
         )}

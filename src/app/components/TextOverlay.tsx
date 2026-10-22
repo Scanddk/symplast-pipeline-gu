@@ -2,6 +2,7 @@ import { useLayoutEffect, useState, type CSSProperties, type RefObject } from 'r
 import { Check, CheckCheck, Hand, Hourglass, X } from 'lucide-react';
 import { formatDays, type EngineState, type Step, type TextState } from '../../../engine/index.ts';
 import { useGuideContext } from '../GuideContext.tsx';
+import { SenderAvatar } from './SenderAvatar.tsx';
 import styles from './TextOverlay.module.css';
 
 /** A box in board-frame coordinates. */
@@ -174,7 +175,10 @@ export function TextOverlay(props: {
         {history.map(({ i }) => (
           <div key={i} className={styles.past}>
             <p className={styles.label}>{label(i)}</p>
-            <p className={styles.bubble}>{message(i)}</p>
+            <div className={styles.byline}>
+              <p className={styles.bubble}>{message(i)}</p>
+              <SenderAvatar kind="automation" title={config.copy.senders.automatic} />
+            </div>
           </div>
         ))}
 
@@ -214,15 +218,19 @@ export function TextOverlay(props: {
               {label(current)}
               {series.exampleMessages && <span className={styles.example}>{story.exampleMessage}</span>}
             </p>
-            <div className={styles.send}>
-              {outcome === 'sent' && (
-                <span className={styles.typing} aria-hidden="true">
-                  <i />
-                  <i />
-                  <i />
-                </span>
-              )}
-              <p className={`${styles.bubble} ${outcome === 'sent' ? styles.sent : styles.notSent}`}>{message(current)}</p>
+            {/* The stage's texts go out automatically: the automatic sender's avatar sits on the side facing the card. */}
+            <div className={styles.byline}>
+              <div className={styles.send}>
+                {outcome === 'sent' && (
+                  <span className={styles.typing} aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                  </span>
+                )}
+                <p className={`${styles.bubble} ${outcome === 'sent' ? styles.sent : styles.notSent}`}>{message(current)}</p>
+              </div>
+              <SenderAvatar kind="automation" title={config.copy.senders.automatic} className={styles.sender} />
             </div>
             {outcome === 'sent' ? (
               <p className={styles.status}>

@@ -72,6 +72,7 @@ export const copy: Copy = {
     why: 'Why?',
     regionLabel: 'What just happened',
   },
+  senders: { automatic: 'Sent automatically', team: 'Your team' },
   story: {
     overview: 'Overview',
     // The content owner's own headline (2026-10-21): "automations" is allowed here on purpose (see the copy test).
@@ -375,8 +376,6 @@ export const copy: Copy = {
     day: 'Day {day}',
     continue: 'See what happens',
     hint: 'See what happens to the card.',
-    next: 'Continue',
-    nextHint: 'On to the next step.',
   },
   reply: {
     label: '{name} // Day {day}',
