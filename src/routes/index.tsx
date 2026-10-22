@@ -1,24 +1,76 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ClientOnly } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+// Client-only host for the migrated Symplast Pipeline Guide.
+//
+// The original app is a static React 18 + TypeScript client app. On this
+// platform it is mounted behind <ClientOnly> so the framework's SSR pass never
+// evaluates browser-only code (localStorage, window, bundled fonts, etc.).
+// The migrated application source lives under `src/app/` and is wired in here
+// once provided. No database, auth, external APIs, analytics, tracking, or form
+// submissions are involved — this is a pure client-only app.
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Symplast Pipeline Guide" },
+      {
+        name: "description",
+        content:
+          "Symplast Pipeline Guide — a client-only interactive guide. Desktop transfer migration.",
+      },
+      { property: "og:title", content: "Symplast Pipeline Guide" },
+      {
+        property: "og:description",
+        content:
+          "Symplast Pipeline Guide — a client-only interactive guide. Desktop transfer migration.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
+    <ClientOnly fallback={<ShellFallback />}>
+      <MigrationPlaceholder />
+    </ClientOnly>
+  );
+}
+
+// Minimal SSR-safe fallback shown before hydration.
+function ShellFallback() {
+  return (
     <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
+      className="flex min-h-screen items-center justify-center bg-background px-4"
+      aria-busy="true"
     >
-      <img
-        data-vibe-blank-page-placeholder="REMOVE_THIS"
-        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIHJ4PSIyNCIgZmlsbD0iI2YxZWZlNyIvPjxwYXRoIGQ9Ik0xMDAgNjR2NzJNNjQgMTAwaDcyIiBzdHJva2U9IiNjOWM0YjUiIHN0cm9rZS13aWR0aD0iOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+"
-        alt="Your app will live here!"
-      />
+      <div className="max-w-md text-center">
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">
+          Symplast Pipeline Guide
+        </h1>
+        <p className="mt-2 text-sm text-muted-foreground">Loading…</p>
+      </div>
+    </div>
+  );
+}
+
+// Placeholder until the migrated application source is provided.
+// This is a shell only — do not treat it as replacement functionality.
+// When source arrives, replace this with the migrated root component
+// imported from `src/app/` (e.g. `import { App } from "@/app/App"`).
+function MigrationPlaceholder() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md text-center">
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">
+          Symplast Pipeline Guide
+        </h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Migration shell ready — awaiting migrated source.
+        </p>
+      </div>
     </div>
   );
 }
