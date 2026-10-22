@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ClientOnly } from "@tanstack/react-router";
 
@@ -9,6 +10,8 @@ import { ClientOnly } from "@tanstack/react-router";
 // The migrated application source lives under `src/app/` and is wired in here
 // once provided. No database, auth, external APIs, analytics, tracking, or form
 // submissions are involved — this is a pure client-only app.
+const DesktopApp = lazy(() => import("../app/main"));
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -34,7 +37,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <ClientOnly fallback={<ShellFallback />}>
-      <MigrationPlaceholder />
+      <Suspense fallback={<ShellFallback />}><DesktopApp /></Suspense>
     </ClientOnly>
   );
 }
@@ -51,25 +54,6 @@ function ShellFallback() {
           Symplast Pipeline Guide
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">Loading…</p>
-      </div>
-    </div>
-  );
-}
-
-// Placeholder until the migrated application source is provided.
-// This is a shell only — do not treat it as replacement functionality.
-// When source arrives, replace this with the migrated root component
-// imported from `src/app/` (e.g. `import { App } from "@/app/App"`).
-function MigrationPlaceholder() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          Symplast Pipeline Guide
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Migration shell ready — awaiting migrated source.
-        </p>
       </div>
     </div>
   );

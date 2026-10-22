@@ -1,0 +1,205 @@
+/* Chrome's toolbar (dark theme) and microphone prompt, as in the content owner's screenshots. */
+.bar {
+  position: relative;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 46px;
+  padding: 0 14px;
+  background: #35363a;
+  color: #e8eaed;
+  font-family: var(--font-ghl);
+  animation: slideDown 300ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes slideDown {
+  from {
+    margin-top: -46px;
+  }
+}
+
+.nav {
+  display: inline-flex;
+  gap: 14px;
+  color: #bdc1c6;
+}
+
+.omnibox {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 32px;
+  padding: 0 4px 0 4px;
+  border-radius: 999px;
+  background: #202124;
+  font-size: 0.875rem;
+}
+
+.chip {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #4b4f56;
+  color: #e8eaed;
+  font-weight: 500;
+}
+
+.url {
+  flex: 1;
+  min-width: 0;
+  padding-left: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #e8eaed;
+}
+
+.star {
+  flex-shrink: 0;
+  margin-right: 10px;
+  color: #bdc1c6;
+}
+
+.profile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #5f6368;
+  color: #e8eaed;
+}
+
+/* The prompt hangs from the "Use microphone?" chip. */
+.prompt {
+  position: absolute;
+  top: calc(100% - 4px);
+  left: 104px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 340px;
+  padding: 18px 18px 20px;
+  border: 1px solid #5f6368;
+  border-radius: 16px;
+  background: #1f1f22;
+  color: #e8eaed;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+  animation: drop 260ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.title svg {
+  color: #bdc1c6;
+}
+
+.use {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9375rem;
+  color: #c4c7c5;
+}
+
+.device {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #2b2c2f;
+  box-shadow: inset 0 0 0 6px #333438;
+}
+
+.level {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #c4c7c5;
+}
+
+.meter {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: #3c4043;
+}
+
+.meter i {
+  display: block;
+  width: 12px;
+  height: 8px;
+  border-radius: 999px;
+  background: #a8c7fa;
+}
+
+.select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid #5f6368;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.allow,
+.choice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border-radius: 999px;
+  background: #2a4a7f;
+  color: #d3e3fd;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.allow {
+  border: 0;
+  background: #3b5a8c;
+  cursor: pointer;
+}
+
+.allow:hover {
+  background: #4a6a9e;
+}
+
+.allow:focus-visible {
+  outline: 2px solid #a8c7fa;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar,
+  .prompt {
+    animation: none;
+  }
+}

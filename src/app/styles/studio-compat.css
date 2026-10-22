@@ -1,0 +1,4 @@
+/* Tailwind Preflight resets heading weight; Desktop relies on the browser's bold default. */
+:where(.desktop-app) :where(h1, h2, h3, h4, h5, h6) {
+  font-weight: bold;
+}

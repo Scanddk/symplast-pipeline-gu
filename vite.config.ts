@@ -6,8 +6,10 @@
 //     (secure host allowlist, port/strictPort, watch ignores, and HMR overlay policy).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@leadconnector/vite-tanstack-config";
+import { strictContent } from "./scripts/strict-content-plugin";
 
 export default defineConfig({
+  vite: { plugins: [strictContent()] },
   // Browser errors stay in the trusted parent-frame console-log flow;
   // do not expose the bridge collector on the public sandbox tunnel.
   devServerBridge: { errorCollector: false },

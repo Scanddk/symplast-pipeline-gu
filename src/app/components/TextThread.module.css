@@ -1,0 +1,192 @@
+/* Texts between the patient (white, left) and your team (teal, right), beside the card over a dimmed board. */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  background: rgba(16, 20, 24, 0.35);
+  animation: fadeIn 300ms ease both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+.cluster {
+  position: absolute;
+  transform-origin: 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-family: var(--font-ghl);
+  perspective: 900px;
+}
+
+.line {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 88%;
+}
+
+.patient {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.practice {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.label {
+  padding: 0 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+}
+
+.typing {
+  display: inline-flex;
+  gap: 5px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  background: #e9e9ee;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
+}
+
+.typing i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #8e8e93;
+  animation: bounce 500ms ease-in-out infinite;
+}
+
+.typing i:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.typing i:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+@keyframes bounce {
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.bubble {
+  position: relative;
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: #fff;
+  color: #1c1c1e;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  transition: opacity 300ms ease;
+  transform: rotateY(-10deg) rotateX(4deg);
+  box-shadow:
+    0 1px 0 #e4e2e0,
+    0 2px 0 #dcdad8,
+    0 3px 0 #d4d2d0,
+    0 4px 0 #cccac8,
+    0 22px 36px rgba(0, 0, 0, 0.38),
+    0 44px 70px rgba(0, 0, 0, 0.28);
+  animation: springIn 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.bubble::after {
+  content: '';
+  position: absolute;
+  left: 16px;
+  bottom: -10px;
+  border-top: 12px solid #cccac8;
+  border-right: 12px solid transparent;
+}
+
+/* Your team's message: teal, tail on the right, typed out letter by letter. */
+.practice .bubble {
+  background: var(--brand-teal);
+  color: #fff;
+  box-shadow:
+    0 1px 0 #578a86,
+    0 2px 0 #4f7f7b,
+    0 3px 0 #477570,
+    0 4px 0 var(--brand-teal-strong),
+    0 22px 36px rgba(0, 0, 0, 0.38),
+    0 44px 70px rgba(0, 0, 0, 0.28);
+}
+
+.practice .bubble::after {
+  left: auto;
+  right: 16px;
+  border-top-color: var(--brand-teal-strong);
+  border-right: 0;
+  border-left: 12px solid transparent;
+}
+
+/* Earlier messages step back a little so the newest one leads. */
+.earlier {
+  opacity: 0.86;
+}
+
+/* "Example message" under texts whose wording the guide wrote (the texts lesson's examples). */
+.example {
+  display: block;
+  width: fit-content;
+  margin-top: 8px;
+  padding: 0 8px;
+  border: 1px dashed currentColor;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* Your team's typing dots sit on the right, in teal. */
+.practice .typing {
+  background: var(--brand-teal-tint);
+}
+
+.caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: currentColor;
+  animation: blink 900ms steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes springIn {
+  from {
+    opacity: 0;
+    transform: rotateY(-10deg) rotateX(24deg) translateZ(-200px) translateY(30px) scale(0.75);
+  }
+  60% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .typing i,
+  .bubble,
+  .caret {
+    animation: none;
+  }
+}

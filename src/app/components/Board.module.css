@@ -1,0 +1,239 @@
+/* Horizontal scroll area, like GHL's board. The scrollbar stays visible so it's clear there is more to the right. */
+.scroller {
+  overflow-x: auto;
+  /* Room for the column highlight outline, which sits just outside each column. */
+  padding: 4px 4px var(--space-3);
+  scrollbar-color: var(--ghl-scrollbar) transparent;
+}
+
+.scroller::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scroller::-webkit-scrollbar-thumb {
+  background: var(--ghl-scrollbar);
+  border-radius: 999px;
+}
+
+.scroller::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.board {
+  position: relative;
+  display: grid;
+  grid-template-columns:
+    repeat(var(--columns), minmax(var(--column-min), var(--column-max)))
+    minmax(var(--won-min), var(--won-max));
+  /* Row 1 holds every header, row 2 every column body, so headers line up at the tallest one. */
+  grid-template-rows: auto auto;
+  column-gap: 8px;
+  row-gap: 0;
+  align-items: start;
+  font-family: var(--font-ghl);
+}
+
+.column {
+  position: relative;
+  min-width: 0;
+  grid-row: span 2;
+  display: grid;
+  grid-template-rows: subgrid;
+  border-radius: var(--radius-md);
+}
+
+.headerWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* GHL header card: dot, name, collapse chevron; second line holds counts in GHL (left blank here). */
+.header {
+  display: grid;
+  grid-template-columns: 8px minmax(0, 1fr) 14px;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    'dot name chevron'
+    'stats stats stats';
+  flex: 1;
+  column-gap: 6px;
+  row-gap: 4px;
+  align-items: start;
+  width: 100%;
+  min-height: 66px;
+  padding: 8px 8px 9px 10px;
+  background: var(--ghl-surface);
+  border: 1px solid var(--ghl-border);
+  border-radius: var(--ghl-radius-card);
+  box-shadow: var(--ghl-shadow-card);
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-ghl);
+}
+
+.header:hover {
+  border-color: var(--ghl-border-strong);
+}
+
+.dot {
+  grid-area: dot;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+}
+
+.stageName {
+  grid-area: name;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+  hyphens: auto;
+  color: var(--ghl-text);
+  overflow-wrap: break-word;
+}
+
+.chevron {
+  grid-area: chevron;
+  margin-top: 3px;
+  color: var(--ghl-text-value);
+}
+
+.headerStats {
+  grid-area: stats;
+  align-self: end;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 8px;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  color: var(--ghl-text-label);
+}
+
+.headerValue {
+  font-weight: 600;
+}
+
+.chat {
+  font-size: 0.75rem;
+}
+
+.headerMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.headerMeta:empty {
+  display: none;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+}
+
+.closedOut {
+  position: relative;
+  grid-row: span 2;
+  align-self: start;
+  min-height: 220px;
+  padding: var(--space-2);
+  border: 2px dashed var(--brand-sage);
+  border-radius: var(--radius-md);
+  background: var(--brand-sage-tint);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.closedTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  color: var(--brand-ink);
+}
+
+.closedBody {
+  font-size: var(--text-xs);
+  color: var(--brand-ink-soft);
+}
+
+/* Destination highlight. One overlay per step (keyed), so it replays for each move. */
+.highlight,
+.highlightAfterMove,
+.highlightStatic {
+  position: absolute;
+  inset: -4px;
+  z-index: 0;
+  border-radius: var(--radius-md);
+  background: var(--highlight);
+  outline: 2px solid var(--highlight-outline);
+  pointer-events: none;
+}
+
+.highlight,
+.highlightAfterMove {
+  opacity: 0;
+  animation: flash var(--highlight-duration) ease-out forwards;
+}
+
+.highlightAfterMove {
+  animation-delay: var(--move-duration);
+}
+
+@keyframes flash {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.column > :not(.highlight):not(.highlightAfterMove):not(.highlightStatic),
+.closedOut > :not(.highlight):not(.highlightAfterMove):not(.highlightStatic) {
+  position: relative;
+  z-index: 1;
+}
+
+/* The moving card must pass over neighbouring columns. */
+.hasCard {
+  z-index: 3;
+}
+
+/* Spotlight: fade everything but the demo card and the header of the column it sits in. */
+.board .headerWrap,
+.board .body > *,
+.board .closedOut > * {
+  transition: opacity 300ms ease;
+}
+
+.spotlight .column:not(.hasCard) .headerWrap,
+.spotlight .body > :not([data-testid='demo-card']),
+.spotlight .closedOut > :not([data-testid='demo-card']) {
+  opacity: 0.3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .board .headerWrap,
+  .board .body > *,
+  .board .closedOut > * {
+    transition: none;
+  }
+}

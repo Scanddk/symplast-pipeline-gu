@@ -1,0 +1,14 @@
+/* Caption + next actions, pinned to the bottom of the screen while the page scrolls behind. */
+.dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 calc(-1 * var(--space-4));
+  padding: var(--space-2) var(--space-4);
+  background: var(--brand-paper);
+  border-top: 1px solid var(--brand-sage);
+  box-shadow: 0 -8px 20px rgba(48, 47, 47, 0.08);
+}

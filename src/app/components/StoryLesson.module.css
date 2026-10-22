@@ -1,0 +1,115 @@
+.lesson {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.nav ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 14px;
+  border: 1px solid var(--brand-sage);
+  border-radius: 999px;
+  background: #fff;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab[aria-current='step'] {
+  background: var(--brand-ink);
+  border-color: var(--brand-ink);
+  color: #fff;
+}
+
+.tabNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--brand-teal-tint);
+  color: var(--brand-teal-strong);
+  font-size: var(--text-xs);
+}
+
+.tab[aria-current='step'] .tabNumber {
+  background: var(--brand-teal);
+  color: #fff;
+}
+
+/* Same pinned dock as the board lesson. */
+.dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 calc(-1 * var(--space-4));
+  padding: var(--space-2) var(--space-4);
+  background: var(--brand-paper);
+  border-top: 1px solid var(--brand-sage);
+  box-shadow: 0 -8px 20px rgba(48, 47, 47, 0.08);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.progress {
+  margin-right: auto;
+  font-size: var(--text-sm);
+  color: var(--brand-ink-soft);
+}
+
+.secondary,
+.primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.secondary {
+  border: 1px solid var(--brand-sage);
+  background: #fff;
+}
+
+.secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.primary {
+  border: 1px solid var(--brand-ink);
+  background: var(--brand-ink);
+  color: #fff;
+  font-family: var(--font-heading);
+}
+
+.primary:hover {
+  background: var(--brand-teal-strong);
+}
+
+.finished {
+  font-weight: 600;
+  color: var(--brand-teal-strong);
+}

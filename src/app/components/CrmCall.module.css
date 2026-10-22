@@ -1,0 +1,296 @@
+/* The CRM's pop-out dialer, from the content owner's screenshot. It hangs from the top of the app (GhlAppFrame popover). */
+.fit {
+  transform-origin: 50% 0;
+}
+
+.dialer {
+  position: relative;
+  width: 380px;
+  padding-bottom: 24px;
+  overflow: visible;
+  border-radius: 0 0 18px 18px;
+  background: #fff;
+  box-shadow:
+    0 24px 60px rgba(16, 24, 40, 0.28),
+    0 4px 12px rgba(16, 24, 40, 0.12);
+  font-family: var(--font-ghl);
+  color: var(--ghl-text);
+  transform-origin: 50% 0;
+  animation: drop 380ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.96);
+  }
+}
+
+.closing {
+  animation: lift 250ms ease-in both;
+}
+
+@keyframes lift {
+  to {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.98);
+  }
+}
+
+/* Drag strip with pin and minimize. */
+.grab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 8px 14px;
+  background: #eef2f8;
+  color: #98a2b3;
+}
+
+.grabTools {
+  display: flex;
+  gap: 8px;
+}
+
+.grabTools span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ghl-text);
+}
+
+.head {
+  padding: 14px 18px 16px;
+  background: #f8f9fb;
+  border-bottom: 1px solid var(--ghl-border);
+}
+
+.direction {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.outIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #1fa34a;
+  color: #fff;
+}
+
+.from {
+  margin-top: 4px;
+  font-size: 1rem;
+  color: var(--ghl-text-value);
+}
+
+/* The person being called. */
+.person {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 44px 18px 34px;
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  background: #7cc08b;
+  color: #20402a;
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.contactIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--ghl-border);
+  color: var(--ghl-text-value);
+}
+
+.number {
+  font-size: 1.125rem;
+  color: var(--ghl-text-value);
+}
+
+.clock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Before the call connects: "Dialing" and three soft dots. */
+.dialing {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  font-size: 1.125rem;
+  color: var(--ghl-text-value);
+}
+
+.dots {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.dots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #98a2b3;
+  animation: dot 1.2s ease-in-out infinite;
+}
+
+.dots i:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dots i:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dot {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Recording: a red dot in a red ring. */
+.rec {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #d92d20;
+  background: radial-gradient(circle, #d92d20 0 4px, transparent 4.5px);
+}
+
+.recOff {
+  border-color: #98a2b3;
+  background: radial-gradient(circle, #98a2b3 0 4px, transparent 4.5px);
+}
+
+/* Two rows of round call controls, split by a line. */
+.actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0 18px;
+  padding: 16px 0;
+  list-style: none;
+}
+
+.actions + .actions {
+  border-top: 1px solid var(--ghl-border);
+  padding-top: 20px;
+}
+
+.actions li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--ghl-text-value);
+}
+
+.round {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 1px solid var(--ghl-border);
+  color: var(--ghl-text-value);
+}
+
+/* Not available on this call: greyed out, as in the CRM. */
+.off {
+  opacity: 0.45;
+}
+
+.off .round {
+  border-color: transparent;
+  background: #f2f4f7;
+}
+
+.end {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: calc(100% - 36px);
+  height: 54px;
+  margin: 18px 18px 0;
+  border: 0;
+  border-radius: 999px;
+  background: #d92d20;
+  color: #fff;
+  font: inherit;
+  font-size: 1.1875rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.end:hover {
+  background: #b42318;
+}
+
+.end:focus-visible {
+  outline: 3px solid #fecdca;
+  outline-offset: 2px;
+}
+
+.end:disabled {
+  cursor: default;
+}
+
+/* Ended: grey. (Before it connects, End Call waits in red, as in the CRM.) */
+.dialer:has(.recOff) .end {
+  background: #98a2b3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialer,
+  .closing,
+  .dots i {
+    animation: none;
+  }
+}

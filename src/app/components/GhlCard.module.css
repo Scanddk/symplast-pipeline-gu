@@ -1,0 +1,126 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 9px 8px 8px;
+  background: var(--ghl-surface);
+  border: 1px solid var(--ghl-border);
+  border-radius: var(--ghl-radius-card);
+  box-shadow: var(--ghl-shadow-card);
+  font-family: var(--font-ghl);
+  color: var(--ghl-text);
+}
+
+.placeholder {
+  composes: card;
+  opacity: 0.55;
+}
+
+/* The demo card is a real GHL card with a teal outline so it stands out from the placeholders. */
+.demo {
+  composes: card;
+  z-index: 2;
+  border-color: var(--brand-teal);
+  /* --lift (0–1) is set while the card flies between columns: the shadow deepens as it rises. */
+  box-shadow:
+    0 0 0 1px var(--brand-teal),
+    0 calc(6px + 24px * var(--lift, 0)) calc(16px + 32px * var(--lift, 0)) rgba(48, 47, 47, calc(0.12 + 0.2 * var(--lift, 0)));
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 6px;
+  min-height: 22px;
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--ghl-text);
+  overflow-wrap: break-word;
+}
+
+.avatar {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--ghl-avatar-border);
+  border-radius: 50%;
+  color: var(--ghl-text-muted);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: 8px;
+  font-size: 0.6875rem;
+  line-height: 1.35;
+}
+
+.row dt {
+  font-weight: 500;
+  color: var(--ghl-text-label);
+}
+
+.row dd {
+  margin: 0;
+  color: var(--ghl-text-value);
+  overflow-wrap: break-word;
+}
+
+.icons {
+  display: flex;
+  justify-content: space-between;
+  max-width: 132px;
+  padding-top: 2px;
+  color: var(--ghl-icon);
+}
+
+.bar {
+  display: inline-block;
+  height: 7px;
+  border-radius: 4px;
+  background: var(--ghl-skeleton);
+  vertical-align: middle;
+}
+
+.status {
+  display: inline-block;
+  padding: 0 8px;
+  border: 1px solid var(--ghl-border-strong);
+  border-radius: 999px;
+  color: var(--ghl-text-value);
+  line-height: 1.6;
+}
+
+.iconButton {
+  display: inline-flex;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}

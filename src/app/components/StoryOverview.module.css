@@ -1,0 +1,750 @@
+/* Opening screen of the texts lesson. Coral is this lesson's colour (as on its menu card); teal is a text that sends. */
+.overview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding-bottom: var(--space-6);
+}
+
+/* ---------- Hero: dark, with an example text and its checks ---------- */
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-6);
+  min-height: 300px;
+  padding: 40px 52px 30px;
+  overflow: hidden;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 80% 25%, rgba(243, 112, 97, 0.42), transparent 42%),
+    radial-gradient(circle at 10% 120%, rgba(98, 153, 149, 0.5), transparent 50%),
+    linear-gradient(140deg, #232222 0%, var(--brand-ink) 55%, #3d3432 100%);
+  color: #fff;
+}
+
+.heroTitle {
+  margin: 0 0 10px;
+  font-size: 2.75rem;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+/* The headline's key words, underlined in coral. */
+.emphasis {
+  text-decoration: underline;
+  text-decoration-color: var(--brand-coral);
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.18em;
+  text-decoration-skip-ink: none;
+  white-space: nowrap;
+}
+
+.heroBody {
+  max-width: 640px;
+  text-wrap: balance;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.35;
+  opacity: 0.92;
+}
+
+/* Three research stats across the top of the cover. */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 620px;
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.stat strong {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #ffb3a8;
+}
+
+.stat span {
+  font-size: var(--text-sm);
+  line-height: 1.35;
+  opacity: 0.9;
+}
+
+.stat sup,
+.sources sup {
+  font-size: 0.65em;
+  margin-left: 1px;
+}
+
+.sources {
+  max-width: 620px;
+  margin-top: 22px;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  opacity: 0.65;
+}
+
+.heroStart {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 26px;
+  padding: 14px 22px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--brand-coral);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(243, 112, 97, 0.4);
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.heroStart:hover,
+.heroStart:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(243, 112, 97, 0.5);
+}
+
+.heroStart:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.heroArt {
+  display: flex;
+  justify-content: center;
+  perspective: 1000px;
+}
+
+/* Tilted toward the viewer, like the texts in the chapters. */
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: min(390px, 100%);
+  transform: rotateY(-14deg) rotateX(6deg) rotateZ(-1deg);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 6px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--brand-ink);
+  font-family: var(--font-ghl);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.pill + .pill {
+  margin-left: 22px;
+}
+
+.pill b {
+  margin-left: 4px;
+  color: var(--brand-teal-strong);
+}
+
+.pillTick {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--brand-teal);
+  color: #fff;
+}
+
+.meta {
+  margin-top: 10px;
+  font-family: var(--font-ghl);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  opacity: 0.75;
+}
+
+/* The text: a solid teal slab with a stacked edge, like the chapters' text bubbles. */
+.bubble {
+  position: relative;
+  margin: 0;
+  padding: 18px 20px 38px;
+  border-radius: 22px 22px 22px 6px;
+  background: var(--brand-teal);
+  color: #fff;
+  font-family: var(--font-ghl);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.45;
+  box-shadow:
+    0 6px 0 var(--brand-teal-strong),
+    0 30px 60px rgba(0, 0, 0, 0.5);
+}
+
+.exampleTag {
+  position: absolute;
+  left: 20px;
+  bottom: 12px;
+  padding: 0 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sent {
+  align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  font-family: var(--font-ghl);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+/* ---------- Sections ---------- */
+
+.section {
+  padding: 28px 32px 32px;
+  border-radius: 20px;
+  background: #fff;
+  border: 1px solid var(--brand-sage-tint);
+  box-shadow:
+    0 1px 2px rgba(16, 24, 40, 0.05),
+    0 10px 28px rgba(48, 47, 47, 0.07);
+}
+
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-bottom: 18px;
+}
+
+.heading {
+  margin-bottom: 0;
+  font-size: 1.5rem;
+}
+
+.section > .heading {
+  margin-bottom: 18px;
+}
+
+.note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-sm);
+  color: var(--brand-ink-soft);
+}
+
+.example {
+  padding: 1px 8px;
+  border: 1px dashed var(--brand-sage);
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.badges:empty {
+  display: none;
+}
+
+/* ---------- Where texts happen ---------- */
+
+.pipelineLabel {
+  margin-bottom: 10px;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brand-ink-soft);
+}
+
+.pipeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 24px;
+  padding: 14px;
+  list-style: none;
+  border-radius: 14px;
+  background: var(--brand-sage-tint);
+}
+
+.chip,
+.chipTexting {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-family: var(--font-ghl);
+  font-size: var(--text-sm);
+}
+
+/* Stages without texts stay quiet. */
+.chip {
+  border: 1px dashed var(--ghl-border-strong);
+  color: var(--ghl-text-muted);
+}
+
+/* Stages with texts stand out: white, ringed in the stage's colour, with the text icon (never colour alone). */
+.chipTexting {
+  background: #fff;
+  color: var(--ghl-text);
+  font-weight: 600;
+  box-shadow:
+    0 0 0 2px var(--dot),
+    0 6px 14px rgba(48, 47, 47, 0.12);
+}
+
+.chipTexting svg {
+  color: var(--dot);
+}
+
+/* ---------- Stage cards ---------- */
+
+.stages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 20px 18px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid var(--brand-sage-tint);
+  box-shadow: 0 6px 18px rgba(48, 47, 47, 0.07);
+  transition:
+    transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 240ms ease;
+}
+
+.stage::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 5px;
+  background: var(--dot);
+}
+
+.stage:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 14px 30px rgba(48, 47, 47, 0.12),
+    0 24px 44px -18px color-mix(in srgb, var(--dot) 60%, transparent);
+}
+
+.stageIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--dot) 14%, #fff);
+  color: var(--dot);
+}
+
+.stageName {
+  font-family: var(--font-ghl);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--ghl-text);
+}
+
+.purpose {
+  flex: 1;
+  font-size: var(--text-sm);
+  color: var(--brand-ink-soft);
+}
+
+.timeline {
+  margin-top: 6px;
+  padding: 12px 12px 34px;
+  border-radius: 12px;
+  background: var(--brand-paper);
+}
+
+.timelineHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 8px;
+  margin-bottom: 16px;
+  font-size: var(--text-xs);
+  color: var(--brand-ink-soft);
+}
+
+.timelineHead strong {
+  font-size: var(--text-sm);
+  color: var(--brand-ink);
+}
+
+/* Each text on a line from the card's arrival (left edge) to the last text. */
+.track {
+  position: relative;
+  height: 2px;
+  margin: 0 18px 0 6px;
+  padding: 0;
+  list-style: none;
+  background: color-mix(in srgb, var(--dot) 35%, #fff);
+}
+
+.track li {
+  position: absolute;
+  top: -5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transform: translateX(-50%);
+  font-family: var(--font-ghl);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--brand-ink-soft);
+}
+
+.trackDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--dot);
+  box-shadow: 0 0 0 3px var(--brand-paper);
+}
+
+/* ---------- The check, as a diagram ---------- */
+
+.rule {
+  max-width: 72ch;
+  margin-bottom: 26px;
+  font-size: var(--text-lg);
+}
+
+.flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 36px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 12px;
+  border-radius: 16px;
+  border: 1px solid var(--brand-sage-tint);
+  background: var(--brand-paper);
+  font-weight: 600;
+  text-align: center;
+}
+
+.nodeIcon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--brand-teal-strong);
+  box-shadow: 0 4px 12px rgba(48, 47, 47, 0.1);
+}
+
+/* Arrow from the step before. */
+.node + .node::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -36px;
+  width: 30px;
+  height: 2px;
+  background: var(--brand-teal);
+}
+
+.node + .node::after {
+  content: '';
+  position: absolute;
+  top: calc(50% - 5px);
+  left: -10px;
+  border: 6px solid transparent;
+  border-left-color: var(--brand-teal);
+}
+
+.yes {
+  position: absolute;
+  top: calc(50% - 22px);
+  left: -32px;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--brand-teal-strong);
+}
+
+.question {
+  border-color: color-mix(in srgb, var(--brand-teal) 40%, #fff);
+  background: #fff;
+}
+
+/* A "No" drops down to the skipped box. */
+.no {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  height: 28px;
+  padding-left: 8px;
+  border-left: 2px dashed var(--brand-coral);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--brand-coral-strong);
+}
+
+.sends {
+  border-color: var(--brand-teal);
+  background: var(--brand-teal-tint);
+}
+
+.sends .nodeIcon {
+  background: var(--brand-teal);
+  color: #fff;
+}
+
+.skipped {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: calc(50% - 18px);
+  margin: 28px 0 0 calc(25% + 9px);
+  padding: 12px 18px;
+  border-radius: 16px;
+  border: 1px dashed var(--brand-coral);
+  background: var(--text-stopped-bg);
+  font-weight: 600;
+}
+
+.skipped .nodeIcon {
+  color: var(--brand-coral-strong);
+}
+
+/* ---------- Chapters ---------- */
+
+.chapters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chapter {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--brand-sage-tint);
+  background: #fff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(48, 47, 47, 0.05);
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+.chapter:hover,
+.chapter:focus-visible {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--brand-coral) 45%, #fff);
+  box-shadow:
+    0 12px 26px rgba(48, 47, 47, 0.1),
+    0 22px 40px -18px rgba(243, 112, 97, 0.55);
+}
+
+.chapter:focus-visible {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 2px;
+}
+
+.chapterNumber {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--brand-ink);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+li:first-child .chapterNumber {
+  background: var(--brand-coral);
+}
+
+.chapterText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.chapterText small {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brand-ink-soft);
+}
+
+li:first-child .chapterText small {
+  color: var(--brand-coral-strong);
+}
+
+.chapterArrow {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: var(--brand-ink-soft);
+  transition: transform 220ms ease;
+}
+
+.chapter:hover .chapterArrow {
+  transform: translateX(3px);
+  color: var(--brand-coral-strong);
+}
+
+/* ---------- Narrow ---------- */
+
+@media (max-width: 1100px) {
+  .flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 48px;
+  }
+
+  /* No arrow into the first node of each row; the Yes label sits above the node instead. */
+  .node:nth-child(3)::before,
+  .node:nth-child(3)::after {
+    display: none;
+  }
+
+  .node:nth-child(3) .yes {
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .skipped {
+    width: auto;
+    margin-left: 0;
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 32px 28px;
+  }
+
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .stack {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroStart,
+  .stage,
+  .chapter,
+  .chapterArrow {
+    transition: none;
+  }
+
+  .heroStart:hover,
+  .stage:hover,
+  .chapter:hover,
+  .chapter:hover .chapterArrow {
+    transform: none;
+  }
+}

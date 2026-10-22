@@ -9,9 +9,9 @@ the platform allows.
 
 - **Verification status:** NC / draft (preserved from the source app — do not
   alter content or status markers during migration).
-- **Scope:** minimal project shell + code editor workspace only. The actual
-  migrated source files are provided separately and dropped into the layers
-  below.
+- **Scope:** Desktop source integrated into the client-only Studio host.
+  Original application files live in `src/app/`; content, engine, and schema
+  remain separate top-level layers.
 - **Publish/deploy:** intentionally not published or deployed.
 
 ## Client-only
@@ -72,12 +72,27 @@ adjustments — no replacement functionality is invented:
 | `motion`       | installed     | `motion/react` — used by the source app (successor to framer-motion). |
 | `lucide-react` | present       | icons                                                         |
 | `zod`          | present       | schema validation (schema layer)                             |
-| `@fontsource/*`| **TBD**       | bundled fonts — install the specific packages when source is provided. |
+| `@fontsource/*`| installed     | bundled Hanken Grotesk, Inter, Space Grotesk, and Syne fonts |
 | CSS Modules    | native (Vite) | no setup needed                                               |
 
-## Next
+## Validation and integration notes
 
-Provide the migrated source files. They map to the layer directories above; the
-root component is wired into `src/routes/index.tsx` (replacing
-`MigrationPlaceholder`), and any `@fontsource` font packages are installed at
-that time.
+- `npm test`: 64 tests pass; `npm run typecheck` passes.
+- `npm run build`: client and SSR production bundles build successfully.
+- `STRICT_CONTENT=true npm run build` intentionally rejects the existing NC/draft content.
+- The original browser entry now exports a component; it does not create a second React root.
+  The route lazily loads that component inside `ClientOnly` and `Suspense`.
+- Relative imports account for `src` moving to `src/app`. Content, schemas, engine,
+  practice overrides, and verification markers retain the Desktop source.
+- The Studio React 19 host uses three ref-type adjustments. TypeScript remains strict,
+  with optional-property/index-access settings aligned to the Desktop project.
+- A scoped stylesheet preserves Desktop heading weights against Tailwind Preflight.
+  URL changes happen outside React state updater functions to avoid router warnings.
+- Existing Studio routing, cloud integration files, error handling, and commit history
+  are retained. No application database/authentication features were added.
+- Desktop-sized local QA covered the menu, lesson navigation, demo submission,
+  chapter/card transitions, browser Back, practice setup, and view switching.
+  Full mobile and 12-beat end-to-end equivalence remain unverified.
+
+The Desktop source is the source of truth. Refresh it before any later transfer;
+this integration does not modify the Desktop originals or the separate `symulator` repository.

@@ -1,0 +1,590 @@
+/*
+ * A fictional plastic surgery practice's website in a large browser window, with the site's own
+ * consultation popup on top: it should read unmistakably as "a form on the practice's website".
+ */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2vh 2vw;
+  background: rgba(16, 20, 24, 0.5);
+  animation: fadeIn 250ms ease both;
+}
+
+.closing {
+  animation: fadeOut 600ms ease both;
+}
+
+.closing .window {
+  animation: shrinkAway 600ms cubic-bezier(0.6, 0, 0.4, 1) both;
+}
+
+@keyframes shrinkAway {
+  to {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px);
+  }
+}
+
+/* Opening the tour: the practice's website fills the screen. */
+.fullscreen {
+  padding: 0;
+  background: var(--brand-paper);
+}
+
+.fullscreen .window {
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
+  animation: none;
+}
+
+/*
+ * The opening (intro): the screen dims, a browser window rises in at a smaller size, its address types itself,
+ * the page loads, and the window grows to fill the screen.
+ */
+.fullscreen.intro {
+  background: rgba(16, 20, 24, 0.55);
+  animation: fadeIn 500ms ease both;
+}
+
+.fullscreen.intro .window {
+  transition:
+    transform 900ms cubic-bezier(0.65, 0, 0.25, 1),
+    border-radius 900ms ease;
+  animation: riseIn 600ms 100ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.78);
+  }
+}
+
+/* Closing still shrinks away after an opening. */
+.fullscreen.intro.closing .window {
+  animation: shrinkAway 600ms cubic-bezier(0.6, 0, 0.4, 1) both;
+}
+
+.fullscreen.small .window {
+  transform: scale(0.82);
+  border-radius: 14px;
+}
+
+/* Before it loads, the page is blank; then the site fades in. */
+.intro .site {
+  transition: opacity 700ms ease;
+}
+
+.blank .site {
+  opacity: 0;
+}
+
+.caret {
+  display: inline-block;
+  width: 1.5px;
+  height: 1em;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  background: #475467;
+  animation: blink 900ms steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.loading {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  z-index: 3;
+  height: 3px;
+  background: #3b82f6;
+  animation: load 700ms cubic-bezier(0.3, 0.6, 0.4, 1) both;
+}
+
+@keyframes load {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+.window {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(1180px, 96vw);
+  height: min(800px, 94vh);
+  overflow: hidden;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  font-family: var(--font-ghl);
+  color: #2b2724;
+  animation: rise 400ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+}
+
+/* ---------- Browser chrome ---------- */
+
+.chrome {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 10px 14px;
+  background: #eef0f3;
+  border-bottom: 1px solid #dde1e6;
+}
+
+.lights {
+  display: flex;
+  gap: 6px;
+}
+
+.lights i,
+.closeLight {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #febc2e;
+}
+
+.lights i + i {
+  background: #28c840;
+}
+
+.closeLight {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: #ff5f57;
+  color: transparent;
+  cursor: pointer;
+}
+
+/* Like a Mac window: the × shows when you hover the lights. */
+.lights:hover .closeLight {
+  color: #7a1712;
+}
+
+.url {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #fff;
+  color: #475467;
+  font-size: 0.8125rem;
+}
+
+/* ---------- The practice's website ---------- */
+
+.site {
+  flex: 1;
+  overflow: hidden;
+  background: #fbf8f5;
+  filter: saturate(0.95);
+}
+
+.siteHeader {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 16px 36px;
+  background: #fff;
+  border-bottom: 1px solid #efe8e1;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+}
+
+.brand strong {
+  display: block;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.brand small {
+  display: block;
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9a8f86;
+}
+
+.monogram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid #b89a7b;
+  color: #8a6a4b;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.25rem;
+}
+
+.siteNav {
+  display: flex;
+  gap: 22px;
+  font-size: 0.875rem;
+  color: #5f574f;
+}
+
+.sitePhone {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  color: #5f574f;
+}
+
+.siteCta {
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: #2b2724;
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 32px;
+  align-items: center;
+  padding: 48px 56px 36px;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #a07c5a;
+}
+
+.heroTitle {
+  margin: 10px 0 12px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 2.75rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.heroBody {
+  max-width: 420px;
+  color: #6c635b;
+  font-size: 1.0625rem;
+}
+
+.heroButtons {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.heroPrimary,
+.heroSecondary {
+  padding: 11px 20px;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.heroPrimary {
+  background: #a07c5a;
+  color: #fff;
+}
+
+.heroSecondary {
+  border: 1px solid #cdbba9;
+  color: #6c635b;
+}
+
+/* Abstract art in place of photography. */
+.heroArt {
+  position: relative;
+  height: 260px;
+  border-radius: 200px 200px 24px 24px;
+  background: linear-gradient(160deg, #efe2d4 0%, #e3cbb4 55%, #cfae90 100%);
+  overflow: hidden;
+}
+
+.heroArt span {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.heroArt span:nth-child(1) {
+  width: 220px;
+  height: 220px;
+  left: -40px;
+  top: 40px;
+}
+
+.heroArt span:nth-child(2) {
+  width: 160px;
+  height: 160px;
+  right: -30px;
+  top: -20px;
+}
+
+.heroArt span:nth-child(3) {
+  width: 90px;
+  height: 90px;
+  right: 60px;
+  bottom: 30px;
+  background: rgba(160, 124, 90, 0.25);
+}
+
+.procedures {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  padding: 0 56px 40px;
+}
+
+.procedure {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid #efe8e1;
+  font-size: 0.875rem;
+  color: #6c635b;
+}
+
+.procedure strong {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #2b2724;
+}
+
+/* ---------- The site's consultation popup ---------- */
+
+.popupLayer {
+  position: absolute;
+  inset: 45px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(43, 39, 36, 0.38);
+}
+
+.popup {
+  position: relative;
+  width: min(600px, 100%);
+  max-height: 100%;
+  overflow: auto;
+  padding: 28px 32px 22px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+  animation: rise 450ms 200ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.popupClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: inline-flex;
+  padding: 6px;
+  border: 0;
+  border-radius: 50%;
+  background: #f4efe9;
+  color: #6c635b;
+  cursor: pointer;
+}
+
+.popupClose:hover {
+  background: #e9e0d6;
+  color: #2b2724;
+}
+
+.popupClose:focus-visible {
+  outline: 2px solid #2b2724;
+  outline-offset: 2px;
+}
+
+.popupBrand {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #a07c5a;
+}
+
+.title {
+  margin-top: 4px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.875rem;
+  font-weight: 400;
+}
+
+.intro {
+  margin: 4px 0 18px;
+  color: #6c635b;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #4a433d;
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.field input,
+.field textarea {
+  padding: 10px 12px;
+  border: 1px solid #ddd2c7;
+  border-radius: 10px;
+  background: #fdfbf9;
+  font: inherit;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  color: #2b2724;
+  resize: none;
+}
+
+.submit {
+  grid-column: 1 / -1;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 32px;
+  border: 0;
+  border-radius: 999px;
+  background: #a07c5a;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submit:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.thanks {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 24px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: #ecfdf3;
+  color: #067647;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  animation: rise 350ms ease both;
+}
+
+.footer {
+  position: absolute;
+  right: 18px;
+  bottom: 12px;
+}
+
+.skip {
+  border: 0;
+  background: none;
+  color: rgba(255, 255, 255, 0.85);
+  font: inherit;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fullscreen.intro,
+  .fullscreen.intro .window,
+  .loading,
+  .caret {
+    animation: none;
+    transition: none;
+  }
+
+  .backdrop,
+  .closing,
+  .window,
+  .popup,
+  .thanks,
+  .spinner {
+    animation: none;
+  }
+}

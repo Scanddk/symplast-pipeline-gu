@@ -1,0 +1,68 @@
+.base {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.v {
+  composes: base;
+  color: var(--badge-v);
+  background: var(--badge-v-bg);
+}
+
+.nc {
+  composes: base;
+  color: var(--badge-nc);
+  background: var(--badge-nc-bg);
+}
+
+.refs {
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.draft {
+  composes: base;
+  color: var(--badge-draft);
+  background: var(--badge-draft-bg);
+}
+
+.mayDiffer {
+  composes: base;
+  color: var(--brand-ink);
+  background: var(--brand-sage-tint);
+  border: 1px dashed var(--brand-sage);
+}
+
+.ruleId {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--text-xs);
+  color: var(--brand-ink-soft);
+  background: var(--brand-sage-tint);
+  padding: 0 4px;
+  border-radius: var(--radius-sm);
+}
+
+.ncParts {
+  margin: var(--space-1) 0 0;
+  padding-left: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--badge-nc);
+}
+
+.compact {
+  white-space: normal;
+  flex-wrap: wrap;
+}
+
+.ruleId {
+  overflow-wrap: anywhere;
+}

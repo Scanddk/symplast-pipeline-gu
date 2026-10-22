@@ -1,0 +1,145 @@
+.toolbar {
+  position: relative;
+  margin-bottom: var(--space-3);
+}
+
+.ghl {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: var(--font-ghl);
+  font-size: 0.8125rem;
+  color: var(--ghl-text);
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.count {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--ghl-pill-bg);
+  color: var(--ghl-pill-text);
+}
+
+.actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+.toggle {
+  display: inline-flex;
+  border: 1px solid var(--ghl-border-strong);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.toggle > span {
+  display: inline-flex;
+  padding: 6px 9px;
+  color: var(--ghl-text-value);
+}
+
+.toggle > .toggleOn {
+  background: var(--ghl-pill-bg);
+  color: var(--ghl-pill-text);
+}
+
+.import,
+.add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+}
+
+.import {
+  border: 1px solid var(--ghl-border-strong);
+  color: var(--ghl-pill-text);
+}
+
+.add {
+  background: var(--ghl-add-bg);
+  color: #fff;
+}
+
+.more {
+  color: var(--ghl-text-muted);
+}
+
+.pipeline {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 7px 12px;
+  border: 1px solid var(--ghl-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--ghl-surface);
+  font-size: 0.875rem;
+  color: var(--ghl-text-value);
+}
+
+.tabs {
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--ghl-border);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: -1px;
+  padding: 6px 10px 8px;
+  border-bottom: 2px solid var(--ghl-tab-active);
+  color: var(--ghl-tab-text);
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border: 1px solid #b2ccff;
+  border-radius: 999px;
+  background: var(--ghl-pill-bg);
+  color: var(--ghl-pill-text);
+}
+
+.search {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 220px;
+  margin-left: auto;
+  padding: 5px 12px;
+  border: 1px solid var(--ghl-border);
+  border-radius: var(--radius-md);
+  color: var(--ghl-text-muted);
+}
+
+/* The guide's simulated clock, at the end of the tab row. Brand-styled so it never reads as part of GHL. */
+.day {
+  align-self: center;
+  margin-left: auto;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--brand-ink);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}

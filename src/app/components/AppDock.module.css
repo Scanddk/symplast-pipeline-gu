@@ -1,0 +1,197 @@
+/* A Mac-style app dock, floating just above the tour's caption and controls. */
+.wrap {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 18px);
+  transform: translateX(-50%);
+  animation: rise 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 30px);
+  }
+}
+
+.dock {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 9px 12px 7px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(244, 246, 245, 0.62);
+  backdrop-filter: blur(18px) saturate(1.6);
+  box-shadow:
+    0 18px 44px rgba(16, 20, 24, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+}
+
+.practiceApp {
+  cursor: pointer;
+}
+
+.practiceApp:focus-visible {
+  outline: none;
+}
+
+.practiceApp:focus-visible .icon {
+  box-shadow:
+    0 0 0 3px #fff,
+    0 0 0 6px var(--brand-coral);
+}
+
+/* App icons: rounded squares with the Symplast mark. */
+.icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  box-shadow: 0 6px 14px rgba(16, 20, 24, 0.22);
+}
+
+.icon img {
+  width: 36px;
+  height: 36px;
+}
+
+.crmIcon {
+  background: #fff;
+}
+
+.crmIcon img {
+  width: 30px;
+  height: 30px;
+  margin-top: -10px;
+}
+
+.crmIcon b {
+  position: absolute;
+  bottom: 6px;
+  font-family: var(--font-ghl);
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--brand-ink);
+}
+
+.practiceIcon {
+  background: #fff;
+}
+
+/* The "app is open" dot under an icon. */
+.running,
+.notRunning {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--brand-ink);
+}
+
+.notRunning {
+  visibility: hidden;
+}
+
+/* App name label above the icon, like the dock's hover label. */
+.name {
+  position: absolute;
+  bottom: calc(100% + 40px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 12px;
+  border-radius: 8px;
+  background: rgba(30, 32, 34, 0.86);
+  color: #fff;
+  font-family: var(--font-ghl);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.name::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border: 6px solid transparent;
+  border-top-color: rgba(30, 32, 34, 0.86);
+}
+
+/* Bounces for attention, like an app asking to be opened. */
+.bouncing .icon {
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.2, 0.6, 0.35, 1);
+  }
+  20% {
+    transform: translateY(-30px);
+    animation-timing-function: cubic-bezier(0.6, 0, 0.8, 0.4);
+  }
+  40% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.2, 0.6, 0.35, 1);
+  }
+  50% {
+    transform: translateY(-10px);
+    animation-timing-function: cubic-bezier(0.6, 0, 0.8, 0.4);
+  }
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Opening: the icon swells and settles as the app's window comes up. */
+.launching .icon {
+  animation: launch 650ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes launch {
+  40% {
+    transform: scale(1.18);
+    filter: brightness(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.launching .name {
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+/* Reduced motion: no bounce; a ring and the name label mark the app instead. */
+.still {
+  animation: none;
+}
+
+.still .bouncing .icon,
+.still .launching .icon {
+  animation: none;
+  box-shadow:
+    0 0 0 3px #fff,
+    0 0 0 6px var(--brand-coral);
+}

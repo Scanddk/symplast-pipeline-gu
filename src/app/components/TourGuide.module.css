@@ -1,0 +1,124 @@
+/* Caption and tour controls, pinned to the bottom of the screen like the other lessons' docks. */
+.dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 calc(-1 * var(--space-4));
+  padding: var(--space-2) var(--space-4);
+  background: var(--brand-paper);
+  border-top: 1px solid var(--brand-sage);
+  box-shadow: 0 -8px 20px rgba(48, 47, 47, 0.08);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.progress {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--brand-ink-soft);
+}
+
+.beatTitle {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--brand-ink);
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+  margin: 0 auto 0 var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.dot,
+.dotNow,
+.dotDone {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand-sage);
+}
+
+.dotNow {
+  width: 22px;
+  border-radius: 999px;
+  background: var(--brand-teal);
+}
+
+.dotDone {
+  background: var(--brand-teal-strong);
+}
+
+.secondary,
+.primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.secondary {
+  border: 1px solid var(--brand-sage);
+  background: #fff;
+}
+
+.primary {
+  border: 1px solid var(--brand-ink);
+  background: var(--brand-ink);
+  color: #fff;
+  font-family: var(--font-heading);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--brand-teal-strong);
+}
+
+/* The tour is about to move on by itself: the Next button fills up until it does. */
+.auto {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.auto::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--brand-teal-strong);
+  transform-origin: 0 50%;
+  animation: fill var(--auto-ms) linear both;
+}
+
+@keyframes fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auto::before {
+    animation: none;
+    transform: scaleX(0);
+  }
+}
+
+.secondary:disabled,
+.primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
